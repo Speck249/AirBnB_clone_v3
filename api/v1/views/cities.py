@@ -4,14 +4,11 @@ RESTful API actions for City object
 """
 from flask import jsonify, abort, request
 from api.v1.views import app_views
+import models
 from models import storage
-from models import Amenity
-from models import City
-from models import Place
-from models import Review
-from models import State
-from models import User
-from models import base_model
+from models.base_model import BaseModel, Base
+from models.city import City
+from models.state import State
 
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'],

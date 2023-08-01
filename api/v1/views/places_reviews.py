@@ -1,11 +1,12 @@
 #!/usr/bin/python3
-'''
-    RESTful API actions for user object
-'''
+"""
+RESTful API actions for user object
+"""
 from flask import jsonify, make_response, abort, request, Blueprint
 from api.v1.views import app_views
 from models import storage
-from models import Review, Place
+from models.review import Review
+from models.place import Place
 
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],
@@ -26,9 +27,9 @@ def all_reviews(place_id):
 @app_views.route('/review/<review_id>', methods=['GET'],
                  strict_slashes=False)
 def get_review(review_id):
-    '''
-        Retrieve one review object
-    '''
+    """
+    Retrieve one review object
+    """
     try:
         review = storage.get('Review', review_id)
         return jsonify(review.to_dict())
@@ -39,9 +40,9 @@ def get_review(review_id):
 @app_views.route('/reviews/<review_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_review(review_id):
-    '''
-        Delete a review object
-    '''
+    """
+    Delete a review object
+    """
     try:
         review_obj = storage.get('Review', review_id)
         review_obj.delete()
@@ -53,9 +54,9 @@ def delete_review(review_id):
 @app_views.route('/places/<place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
 def post_review():
-    '''
-        Create a review object
-    '''
+    """
+    Create a review object
+    """
     if not request.json:
         return jsonify({"error": "Not a JSON"}), 400
     if 'user_id' not in request.json:
@@ -70,9 +71,9 @@ def post_review():
 @app_views.route('/reviews/<review_id>', methods=['PUT'],
                  strict_slashes=False)
 def put_review(review_id):
-    '''
-        Update a review object
-    '''
+    """
+    Update a review object
+    """
     obj_review = storage.get('Review', review_id)
     if obj_review is None:
         abort(404)
