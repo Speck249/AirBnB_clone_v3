@@ -77,6 +77,10 @@ class DBStorage:
 
     def get(self, cls, id):
         """Returns the object based on the class and its ID."""
+        cls_val = classes.values()
+        if cls not in cls_val:
+            return None
+
         obj_list = models.storage.all(cls).values()
         for val in obj_list:
             if val.id == id:
@@ -93,3 +97,4 @@ class DBStorage:
         else:
             for obj in cls_values:
                 obj_count += len(models.storage.all(obj).values())
+        return obj_count
